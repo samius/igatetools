@@ -1,0 +1,9 @@
+{
+    "name": "igate/igatetools",
+    "minimum-stability" : "dev",
+    "autoload": {
+        "psr-0": {
+            "Igate": "src/"
+        }
+    }
+}
