@@ -82,7 +82,6 @@ class Deployer
     public function composerInstall()
     {
         $this->cd($this->buildDir);
-        $this->exec('composer self-update', 'Updating composer');
         $this->exec('composer install', 'Installing composer dependencies');
     }
 
@@ -90,7 +89,7 @@ class Deployer
     {
         $this->cd($this->buildDir);
         $cmd = 'app/console cache:clear';
-        $this->exec('php clean.php', 'Clearing cache');
+        $this->exec($cmd, 'Clearing cache');
     }
 
     public function migrateDb()
