@@ -56,7 +56,7 @@ class Deployer
      */
     public function copyTempPreferences()
     {
-        $cmd = "cp {$this->originalDir}/parametersTemp.yml {$this->buildDir}/app/config/parameters.yml";
+        $cmd = "mv {$this->originalDir}/parameters.yml {$this->buildDir}/app/config/parameters.yml";
         $this->exec($cmd, 'Copying original/parametersTemp.yml to build/app/config/parameters.yml');
     }
     
