@@ -57,7 +57,7 @@ class Deployer
     public function copyTempPreferences()
     {
         $cmd = "mv {$this->originalDir}/parameters.yml {$this->buildDir}/app/config/parameters.yml";
-        $this->exec($cmd, 'Copying original/parametersTemp.yml to build/app/config/parameters.yml');
+        $this->exec($cmd, 'Copying original/parameters.yml to build/app/config/parameters.yml');
     }
     
     public function backupDb()
@@ -90,6 +90,9 @@ class Deployer
         $this->cd($this->buildDir);
         $cmd = 'app/console cache:clear';
         $this->exec($cmd, 'Clearing cache');
+
+        $this->exec("chmod a+w {$this->buildDir}/app/cache -R");
+        $this->exec("chmod a+w {$this->buildDir}/app/logs -R");
     }
 
     public function migrateDb()
