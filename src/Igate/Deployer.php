@@ -95,7 +95,7 @@ class Deployer
     public function migrateDb()
     {
         $this->cd($this->buildDir);
-        $cmd = 'app/console doctrine:migrations:migrate';
+        $cmd = 'app/console doctrine:migrations:migrate --allow-no-migration';
         $this->exec($cmd, 'Applying migrations');
     }
 
