@@ -18,5 +18,6 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(5, Barcode::getSsccCheckDigit(12345678901234567));
         $this->assertEquals(5, Barcode::getSsccCheckDigit(98765432109876543));
         $this->assertEquals(7, Barcode::getSsccCheckDigit(65432198765412398));
+        $this->assertEquals(6, Barcode::getSsccCheckDigit('08594181490000001'));
     }
 }

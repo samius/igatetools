@@ -9,6 +9,17 @@ class Barcode
 {
     const SSCC_LENGTH = 17;
 
+
+    const PREFIX_TRACKITO_TECHNOLOGY_CZ_GS1= '418149'; //international barcode prefix for company
+    const PREFIX_CZECH_REPUBLIC = '859'; //international code for CZ
+
+    const DATE_FORMAT = 'ymd'; //format of date for barcodes
+
+    const
+        CODE_SSCC = '00', //prefix of SSCC in barcode number (in label in braces)
+        CODE_DATE = '11',   //prefix of date of production in barcode number (in label in braces)
+        CODE_SERIAL = '21'; //prefix of serial number in barcode number (in label in braces)
+
     /**
      * @see http://www.gs1sy.org/GS1System/id_keys/CheckDigit.htm
      * @param $sscc
