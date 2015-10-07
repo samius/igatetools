@@ -24,14 +24,17 @@ class Deployer
 
     private $buildDir;
 
+    private $environment;
 
-    public function __construct($originalDir)
+
+    public function __construct($originalDir, $environment='prod')
     {
         $this->originalDir = $originalDir;
         $this->workDir = dirname($originalDir); //parent dir
         $this->basename = basename($originalDir);
         $this->buildDir = $this->workDir . DIRECTORY_SEPARATOR . $this->basename . '_build';
         $this->backupDir = $this->workDir . DIRECTORY_SEPARATOR . $this->getBackupDirBasename() . DateTime::now()->format('ymd-His');
+        $this->environment = $environment;
     }
 
     public function cloneToBuildDir($gitUrl)
@@ -82,17 +85,26 @@ class Deployer
     public function composerInstall()
     {
         $this->cd($this->buildDir);
-        $this->exec('composer install', 'Installing composer dependencies');
+        $this->exec('php composer.phar install', 'Installing composer dependencies');
     }
 
     public function clean()
     {
         $this->cd($this->buildDir);
-        $cmd = 'app/console cache:clear';
+        $cmd = "app/console cache:clear {$this->getEnvSwitch()} --no-debug";
         $this->exec($cmd, 'Clearing cache');
+        $cmd = "app/console cache:warmup {$this->getEnvSwitch()}";
+        $this->exec($cmd, 'Warming up cache');
 
         $this->exec("chmod a+w {$this->buildDir}/app/cache -R");
         $this->exec("chmod a+w {$this->buildDir}/app/logs -R");
+    }
+    
+    public function makeAssets()
+    {
+        $this->cd($this->buildDir);
+        $this->exec("app/console assets:install --symlink");
+        $this->exec("app/console assetic:dump {$this->getEnvSwitch()} --no-debug");
     }
 
     public function migrateDb()
@@ -146,6 +158,11 @@ class Deployer
             var_dump($returnVal);
             throw new \RuntimeException($returnVal);
         }
+    }
+    
+    private function getEnvSwitch()
+    {
+        return '--env=' . $this->environment;
     }
 
     private function getBackupDirBasename()
