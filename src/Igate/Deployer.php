@@ -85,7 +85,8 @@ class Deployer
     public function composerInstall()
     {
         $this->cd($this->buildDir);
-        $this->exec('php composer.phar install', 'Installing composer dependencies');
+        $this->exec("export SYMFONY_ENV={$this->environment}");
+        $this->exec("php composer.phar install", "Installing composer dependencies");
     }
 
     public function clean()
