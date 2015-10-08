@@ -35,6 +35,7 @@ class Deployer
         $this->buildDir = $this->workDir . DIRECTORY_SEPARATOR . $this->basename . '_build';
         $this->backupDir = $this->workDir . DIRECTORY_SEPARATOR . $this->getBackupDirBasename() . DateTime::now()->format('ymd-His');
         $this->environment = $environment;
+        putenv("SYMFONY_ENV=prod"); //composer has no environmets, so it takes this env variable
     }
 
     public function cloneToBuildDir($gitUrl)
@@ -85,7 +86,6 @@ class Deployer
     public function composerInstall()
     {
         $this->cd($this->buildDir);
-        putenv("SYMFONY_ENV=prod"); //composer has no environmets, so it takes this env variable
         $this->exec("php composer.phar install --no-dev", "Installing composer dependencies");
     }
 
@@ -163,7 +163,7 @@ class Deployer
     
     private function getEnvSwitch()
     {
-        return '--env=' . $this->environment;
+        return '--env=prod';
     }
 
     private function getBackupDirBasename()
