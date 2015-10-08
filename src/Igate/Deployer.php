@@ -86,7 +86,7 @@ class Deployer
     {
         $this->cd($this->buildDir);
         $this->exec("export SYMFONY_ENV={$this->environment}");
-        $this->exec("php composer.phar install", "Installing composer dependencies");
+        $this->exec("php composer.phar install --no-dev", "Installing composer dependencies");
     }
 
     public function clean()
