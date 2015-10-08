@@ -85,7 +85,7 @@ class Deployer
     public function composerInstall()
     {
         $this->cd($this->buildDir);
-        $this->exec("export SYMFONY_ENV={$this->environment}");
+        putenv("SYMFONY_ENV=prod"); //composer has no environmets, so it takes this env variable
         $this->exec("php composer.phar install --no-dev", "Installing composer dependencies");
     }
 
