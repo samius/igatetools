@@ -86,21 +86,19 @@ class Deployer
     public function composerInstall()
     {
         $this->cd($this->buildDir);
-        $this->exec("php composer.phar install --no-dev", "Installing composer dependencies");
+        $this->exec("php composer.phar install --no-dev --optimize-autoloader" , "Installing composer dependencies");
     }
 
     public function clean()
-    {
-        $this->cd($this->buildDir);
-        $cmd = "app/console cache:clear {$this->getEnvSwitch()} --no-debug";
-        $this->exec($cmd, 'Clearing cache');
-        $cmd = "app/console cache:warmup {$this->getEnvSwitch()}";
-        $this->exec($cmd, 'Warming up cache');
+     {
+         $this->cd($this->originalDir);
+         $cmd = "app/console cache:clear {$this->getEnvSwitch()} --no-debug --no-warmup";
+         $this->exec($cmd, 'Clearing cache');
 
-        $this->exec("chmod a+w {$this->buildDir}/app/cache -R");
-        $this->exec("chmod a+w {$this->buildDir}/app/logs -R");
-    }
-    
+         $this->exec("chmod a+w {$this->buildDir}/app/cache -R");
+         $this->exec("chmod a+w {$this->buildDir}/app/logs -R");
+     }
+
     public function makeAssets()
     {
         $this->cd($this->buildDir);
