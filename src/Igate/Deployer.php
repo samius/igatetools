@@ -82,7 +82,7 @@ class Deployer
     public function composerInstall()
     {
         $this->cd($this->buildDir);
-        $this->exec('composer install', 'Installing composer dependencies');
+        $this->exec('php composer.phar install --no-dev', 'Installing composer dependencies');
     }
 
     public function clean()
