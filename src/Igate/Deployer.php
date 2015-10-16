@@ -102,7 +102,7 @@ class Deployer
     public function makeAssets()
     {
         $this->cd($this->buildDir);
-        $this->exec("app/console assets:install --symlink");
+        $this->exec("app/console assets:install {$this->getEnvSwitch()}");
         $this->exec("app/console assetic:dump {$this->getEnvSwitch()} --no-debug");
     }
 
