@@ -1,7 +1,7 @@
 <?php
 namespace Igate\Exception;
 
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Support class for Exception\ErrorCode
@@ -23,10 +23,10 @@ abstract class Codebook
     /**
      * @param Translator $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->t = $translator;
-        $this->setMessages();
+        $this->messages = $this->setMessages();
     }
 
     /**
