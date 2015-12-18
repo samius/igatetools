@@ -338,6 +338,18 @@ class DateTime extends \DateTime
     }
 
     /**
+     * return bool
+     */
+    public function isToday()
+    {
+        $timezone = $this->getTimezone();
+        $now = new DateTime(null, $timezone);
+
+        return $this->getDbDate() == $now->getDbDate();
+    }
+
+
+    /**
      * Prida k datu dany pocet hodin, ktere spadaji do pracovniho dne. Preskakuje tedy vikendy. Nebere v uvahu statni
      * svatky.
      *
