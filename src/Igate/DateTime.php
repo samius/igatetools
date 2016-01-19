@@ -49,14 +49,6 @@ class DateTime extends \DateTime
         }
     }
 
-    /**
-     * @param \Zend_Date $zendDate
-     * @return \Gdi\DateTime
-     */
-    public static function fromZendDate(\Zend_Date $zendDate)
-    {
-        return new self($zendDate->toString(\j3_Date::DB_FULL));
-    }
 
     /**
      * @static
@@ -459,5 +451,14 @@ class DateTime extends \DateTime
         } else {
             return $dayNum - 1;
         }
+    }
+
+    /**
+     * Vraci pocet dni tohoto mesice
+     * @return int
+     */
+    public function getDayCountOfThisMonth()
+    {
+        return (int) $this->format('t');
     }
 }
