@@ -454,6 +454,15 @@ class DateTime extends \DateTime
     }
 
     /**
+     * Returns string in format 201505
+     * @return string
+     */
+    public function getYearMonth()
+    {
+        return $this->format('Ym');
+    }
+
+    /**
      * Vraci pocet dni tohoto mesice
      * @return int
      */
@@ -461,4 +470,5 @@ class DateTime extends \DateTime
     {
         return (int) $this->format('t');
     }
+
 }
