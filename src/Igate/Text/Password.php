@@ -2,8 +2,6 @@
 namespace Igate\Text;
 
 /**
- * @milan z vyslovitelnych hesel jsou vypustena vsechna pismena O, ktera jsou zamenitelna za 0.
- *
  * Class to create passwords
  *
  * PHP versions 4 and 5
@@ -444,8 +442,8 @@ class Password {
         /**
          * List of vowels and vowel sounds
          */
-        $v = array('a', 'e', 'i', 'u', 'ae', 'au', 'ie',
-                   'ea', 'eu', 'ia', 'ai'
+        $v = array('a', 'e', 'i', 'o', 'u', 'ae', 'ou', 'io',
+                   'ea', 'ou', 'ia', 'ai'
                    );
 
         /**
@@ -457,7 +455,7 @@ class Password {
                    'ch', 'ph', 'st', 'sl', 'cl'
                    );
 
-        $v_count = 11;
+        $v_count = 12;
         $c_count = 29;
 
         $_Text_Password_NumberOfPossibleCharacters = $v_count + $c_count;
