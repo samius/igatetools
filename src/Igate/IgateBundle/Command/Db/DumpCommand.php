@@ -1,5 +1,5 @@
 <?php
-namespace Igate\IgateBundle\Command;
+namespace Igate\IgateBundle\Command\Db;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @author milan
  * @package Igate
  */
-class DbDumpCommand extends ContainerAwareCommand
+class DumpCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
