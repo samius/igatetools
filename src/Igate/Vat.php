@@ -16,31 +16,42 @@ class Vat
 
     /**
      * @param $price
-     * @param string $charge
+     * @param string $tariff
      * @return mixed
      */
-    public static function getPriceWithVat($price, $charge=self::TARIFF_HIGH)
+    public static function getPriceWithVat($price, $tariff=self::TARIFF_HIGH)
     {
-        return $price * self::getRatio($charge);
+        return $price * self::getRatio($tariff);
     }
 
     /**
      * @param $price
-     * @param string $charge
+     * @param string $tariff
      * @return float
      */
-    public static function getPriceWithoutVat($price, $charge=self::TARIFF_HIGH)
+    public static function getPriceWithoutVat($price, $tariff=self::TARIFF_HIGH)
     {
-        return $price / self::getRatio($charge);
+        return $price / self::getRatio($tariff);
     }
 
     /**
-     * @param $charge
+     * Returns VAT value in percent.. i.e. 1.21=>21%
+     * @param string $tariff
+     * @return int
+     */
+    public static function getPercentVat($tariff = self::TARIFF_HIGH)
+    {
+        return 100 * self::getRatio($tariff) - 100;
+    }
+
+
+    /**
+     * @param $tariff
      * @return float
      */
-    private static function getRatio($charge)
+    private static function getRatio($tariff)
     {
-        if ($charge == self::TARIFF_HIGH) {
+        if ($tariff == self::TARIFF_HIGH) {
             return self::RATIO_HIGH;
         } else {
             return self::RATIO_LOW;
