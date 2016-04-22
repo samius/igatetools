@@ -2,6 +2,7 @@
 namespace Igate\IgateBundle\Command\Db;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -14,7 +15,8 @@ class RestoreCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName('igate:db:restore')
-             ->setDescription('Restores whole database from dump');
+            ->setDescription('Restores whole database from dump')
+            ->addArgument('dbname', InputArgument::OPTIONAL, 'Dump filename without extension');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -28,7 +30,11 @@ class RestoreCommand extends ContainerAwareCommand
         if (!is_dir($fileDir)) {
             mkdir($fileDir);
         }
-        $filename = $fileDir . DIRECTORY_SEPARATOR . "$dbName.sql";
+        if ($input->getArgument('dbname')) {
+            $filename = $fileDir . DIRECTORY_SEPARATOR . $input->getArgument('dbname') . '.sql';
+        } else {
+            $filename = $fileDir . DIRECTORY_SEPARATOR . "$dbName.sql";
+        }
 
         echo("Using file $filename\n");
         echo("Removing database $dbName ..\n");
