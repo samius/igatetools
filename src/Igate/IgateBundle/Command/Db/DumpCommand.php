@@ -21,6 +21,7 @@ class DumpCommand extends ContainerAwareCommand
     {
         $conf = $this->getContainer();
         $dbName = $conf->getParameter('database_name');
+        $executable = $conf->getParameter('mysqldump_executable') ?: 'mysqldump';
 
         $fileDir = $conf->getParameter('kernel.root_dir') . DIRECTORY_SEPARATOR . 'db';
         if (!is_dir($fileDir)) {
@@ -30,8 +31,8 @@ class DumpCommand extends ContainerAwareCommand
 
         echo("Using file $filename\n");
         echo "Dumping database $dbName ...\n";
-        $defaultFlags = "-u {$conf->getParameter('database_user')} -p{$conf->getParameter('database_password')} --host {$conf->getParameter('database_host')} --skip-dump-date --skip-comments";
-        $cmd = "mysqldump $defaultFlags --quote-names --routines --triggers {$dbName}";
+        $defaultFlags = "-u {$conf->getParameter('database_user')} -p{$conf->getParameter('database_password')} --host {$conf->getParameter('database_host')} --skip-dump-date --skip-comments --hex-blob";
+        $cmd = "$executable $defaultFlags --quote-names --routines --triggers {$dbName}";
         $sql = shell_exec($cmd);
 
         file_put_contents($filename, $sql);

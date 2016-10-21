@@ -25,6 +25,7 @@ class RestoreCommand extends ContainerAwareCommand
         $conf = $this->getContainer();
         $db = $conf->get('doctrine')->getManager()->getConnection();
         $dbName = $conf->getParameter('database_name');
+        $executable = $conf->getParameter('mysql_executable') ?: 'mysql';
 
         $fileDir = $conf->getParameter('kernel.root_dir') . DIRECTORY_SEPARATOR . 'db';
         if (!is_dir($fileDir)) {
@@ -44,7 +45,7 @@ class RestoreCommand extends ContainerAwareCommand
 
 
         echo "Importing data...\n";
-        $cmd = "mysql --default-character-set=utf8 --host {$conf->getParameter('database_host')} -u {$conf->getParameter('database_user')} -p{$conf->getParameter('database_password')} {$dbName} < $filename";
+        $cmd = "$executable --default-character-set=utf8 --host {$conf->getParameter('database_host')} -u {$conf->getParameter('database_user')} -p{$conf->getParameter('database_password')} {$dbName} < $filename";
         shell_exec($cmd);
 
         echo "OK\n";
