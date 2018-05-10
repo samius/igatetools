@@ -21,7 +21,12 @@ class DumpCommand extends ContainerAwareCommand
     {
         $conf = $this->getContainer();
         $dbName = $conf->getParameter('database_name');
-        $executable = $conf->getParameter('mysqldump_executable') ?: 'mysqldump';
+        if ($conf->hasParameter('mysqldump_executable')) {
+            $executable = $conf->getParameter('mysqldump_executable');
+        } else {
+            $executable ='mysqldump';
+        }
+
 
         $fileDir = $conf->getParameter('kernel.root_dir') . DIRECTORY_SEPARATOR . 'db';
         if (!is_dir($fileDir)) {
