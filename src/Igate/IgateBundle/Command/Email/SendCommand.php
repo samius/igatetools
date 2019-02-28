@@ -57,7 +57,7 @@ class SendCommand extends NewEmailCommand
      */
     private function createMessage(InputInterface $input)
     {
-        $message = \Swift_Message::newInstance(
+        $message = new \Swift_Message(
             $input->getOption('subject'),
             $input->getOption('body'),
             $input->getOption('content-type'),
