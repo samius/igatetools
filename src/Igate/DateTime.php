@@ -25,6 +25,9 @@ class DateTime extends \DateTime
     // 1983-02-25
     const DB_DATE = 'Y-m-d';
 
+    //198302
+    const YEARMONTH = 'Ym';
+
     // 1983-02-25 12:45:42
     const DB_FULL = 'Y-m-d H:i:s';
     const PART_SECOND = 'second',
@@ -49,14 +52,6 @@ class DateTime extends \DateTime
         }
     }
 
-    /**
-     * @param \Zend_Date $zendDate
-     * @return \Gdi\DateTime
-     */
-    public static function fromZendDate(\Zend_Date $zendDate)
-    {
-        return new self($zendDate->toString(\j3_Date::DB_FULL));
-    }
 
     /**
      * @static
@@ -338,6 +333,18 @@ class DateTime extends \DateTime
     }
 
     /**
+     * return bool
+     */
+    public function isToday()
+    {
+        $timezone = $this->getTimezone();
+        $now = new DateTime(null, $timezone);
+
+        return $this->getDbDate() == $now->getDbDate();
+    }
+
+
+    /**
      * Prida k datu dany pocet hodin, ktere spadaji do pracovniho dne. Preskakuje tedy vikendy. Nebere v uvahu statni
      * svatky.
      *
@@ -448,4 +455,35 @@ class DateTime extends \DateTime
             return $dayNum - 1;
         }
     }
+
+    /**
+     * Returns string in format 201505
+     * @return string
+     */
+    public function getYearMonth()
+    {
+        return $this->format('Ym');
+    }
+
+    /**
+     * Vraci pocet dni tohoto mesice
+     * @return int
+     */
+    public function getDayCountOfThisMonth()
+    {
+        return (int) $this->format('t');
+    }
+
+    /**
+     * At 2017-31-10, when we call createFromFormat('Ym','201709'), it will return '2017-10-01'.
+     * We do not set day, so actual day is set. As september has only 30 days (and today is 31. day), one day is added, so
+     * it goes into october.
+     * @param $yearmonth
+     * @return DateTime
+     */
+    public static function createFromYearmonth($yearmonth)
+    {
+        return self::createFromFormat('!' . self::YEARMONTH, $yearmonth);
+    }
+
 }
